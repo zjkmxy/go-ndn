@@ -14,17 +14,38 @@ type TlvField interface {
 
 	// codegen encoding length of the field
 	//   - in(value): struct being encoded
+	//   - in(encoder): encoder struct
 	//   - out(l): length variable to update
 	GenEncodingLength() (string, error)
+	// codegen encoding length for nocopy
 	GenEncodingWirePlan() (string, error)
+	// codegen encoding the field
+	//   - in(value): struct being encoded
+	//   - out(buf): buffer to write to
 	GenEncodeInto() (string, error)
+	// codegen fields in encoder struct
 	GenEncoderStruct() (string, error)
+	// codegen encoder initialization
+	//   - in(value): struct being encoded
+	//   - in(encoder): encoder struct
 	GenInitEncoder() (string, error)
+	// codegen parsing context struct fields
 	GenParsingContextStruct() (string, error)
+	// codegen parsing context initialization
 	GenInitContext() (string, error)
+	// codegen reading from buffer
+	//   - in(value): struct being decoded
+	//   - in(context): parsing context (if with context)
+	//   - in(reader): byte reader
+	//   - in(ignoreCritical): ignore critical flag
 	GenReadFrom() (string, error)
+	// codegen skipping reading a field
+	//   - in(value): struct being decoded
+	//   - out(err): error variable
 	GenSkipProcess() (string, error)
+	// codegen converting to dict
 	GenToDict() (string, error)
+	// codegen converting from dict
 	GenFromDict() (string, error)
 }
 
